@@ -19,7 +19,7 @@
         # Enable ‘sudo’ for the user.
         # extraGroups = ["wheel"];
 
-        hashedPassword = "$y$j9T$Ta18BbbC2CAHpOapijf3c/$p9ltNua3z9FO7f90r5e2BQVG39nnoWRYAsOF7E5vhe0";
+        hashedPassword = "$y$j9T$tjADhn4w1/QWR0j5FhhM7.$I7BV6eSTCm6uAnj58ylj5RnZBiKvzmy7u9AXu3TgqQA";
 
         openssh.authorizedKeys.keys = [laptopRsaKey];
       };
