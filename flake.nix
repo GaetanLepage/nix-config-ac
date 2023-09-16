@@ -31,8 +31,8 @@
                 --verbose \
                 --fast \
                 --flake .#${hostname} \
-                --target-host root@gaming \
-                --build-host root@gaming
+                --target-host root@${hostname} \
+                --build-host root@${hostname}
           '');
       };
     };
