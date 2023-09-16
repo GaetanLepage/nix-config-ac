@@ -11,16 +11,16 @@
   boot = {
     initrd = {
       availableKernelModules = [
-        "xhci_pci"
         "ehci_pci"
+        "ums_realtek"
         "ahci"
-        "usb_storage"
         "usbhid"
+        "usb_storage"
         "sd_mod"
       ];
       kernelModules = [];
     };
-    kernelModules = [];
+    kernelModules = ["kvm-intel"];
     extraModulePackages = [];
   };
 
@@ -36,7 +36,11 @@
     };
   };
 
-  swapDevices = [];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/99801787-7ef1-405e-ab70-0ed5bf9a68b2";
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -45,5 +49,6 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s25.useDHCP = lib.mkDefault true;
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
