@@ -3,6 +3,7 @@
     # Include the results of the hardware scan.
     ./hardware.nix
 
+    ./backup.nix
     ./networking.nix
     ./nix.nix
     ./printer.nix
