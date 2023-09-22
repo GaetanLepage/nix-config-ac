@@ -10,6 +10,7 @@
     ./server-tank-nfs.nix
     ./ssh.nix
     ./users.nix
+    ./wireguard.nix
     ./xorg.nix
   ];
 
