@@ -50,12 +50,16 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    htop
     btop
+    htop
+    ncdu
 
     # GUI applications
+    evince
     firefox
-    signal-desktop
+    gthumb
+    libreoffice-fresh
+    thunderbird
     vlc
   ];
 
