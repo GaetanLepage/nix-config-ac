@@ -13,8 +13,16 @@
         openssh.authorizedKeys.keys = [laptopRsaKey];
       };
 
-      acl = {
+      anne-catherine = {
         isNormalUser = true;
+
+        # Need to be the same as on the server (for NFS permissions)
+        uid = 1010;
+
+        extraGroups = [
+          "lepage"
+          "wheel"
+        ];
 
         # Enable ‘sudo’ for the user.
         # extraGroups = ["wheel"];
@@ -24,6 +32,8 @@
         openssh.authorizedKeys.keys = [laptopRsaKey];
       };
     };
+
+    groups.lepage.gid = 1005;
   };
 
   # Members of group wheel can execute sudo commands without password.
