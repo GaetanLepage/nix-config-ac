@@ -22,6 +22,7 @@
     };
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
+    supportedFilesystems = ["ntfs"];
   };
 
   fileSystems = {
