@@ -6,6 +6,7 @@
     ./autofs.nix
     ./networking.nix
     ./nix.nix
+    ./printer.nix
     ./security.nix
     ./server-tank-nfs.nix
     ./ssh.nix
