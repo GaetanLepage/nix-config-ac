@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   services.xserver = {
     enable = true;
 
@@ -14,10 +14,10 @@
       };
       # Force wayland session by default
       defaultSession = "cinnamon";
-      # autoLogin = {
-      #   enable = true;
-      #   user = "acl";
-      # };
+      autoLogin = {
+        enable = false;
+        user = "anne-catherine";
+      };
     };
 
     desktopManager.cinnamon.enable = true;
