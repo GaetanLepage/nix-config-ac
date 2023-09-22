@@ -6,9 +6,9 @@
 
     autoMaster = let
       mapConf = pkgs.writeText "autofs.mnt" ''
-        movies \
+        serveur-lepage \
             -fstype=nfs4 \
-            192.168.1.2:/tank/share/movies
+            10.10.10.2:/tank
       '';
     in ''
       /mnt        ${mapConf}          --timeout 60
