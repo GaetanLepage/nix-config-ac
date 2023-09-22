@@ -7,6 +7,7 @@
     ./networking.nix
     ./nix.nix
     ./security.nix
+    ./server-tank-nfs.nix
     ./ssh.nix
     ./users.nix
     ./xorg.nix
