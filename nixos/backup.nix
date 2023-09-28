@@ -13,8 +13,6 @@
         # Do not crash the service if the rsync command fails
         set +e
 
-        whoami
-
         # rsync backup command
         ${pkgs.rsync}/bin/rsync \
           -rav \
