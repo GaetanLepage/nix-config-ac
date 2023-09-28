@@ -17,10 +17,15 @@
     };
   };
 
+  age.secrets.ssh-private-key = {
+    file = ../secrets/rsa-ssh-private-key.age;
+    path = "/root/.ssh/id_rsa";
+  };
+  # TODO need identification on repo
   system.autoUpgrade = {
     enable = true;
     dates = "04:00";
-    flake = "github:GaetanLepage/nix-config-ac";
+    flake = "git+ssh://git@github.com/GaetanLepage/nix-config-ac.git";
     flags = [
       "--update-input"
       "nixpkgs"
