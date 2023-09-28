@@ -1,6 +1,8 @@
 {pkgs, ...}: {
-  systemd = {
-    services.backup-home-to-server = {
+  systemd = let
+    serviceName = "backup-home-to-server";
+  in {
+    services.${serviceName} = {
       description = "Script that periodically backups the /home directory to /tank/backup/acl-desktop";
 
       serviceConfig = {
@@ -34,7 +36,7 @@
       '';
     };
 
-    timers.backup-var-to-tank = {
+    timers.${serviceName} = {
       wantedBy = ["timers.target"];
       after = ["multi-user.target"];
 
