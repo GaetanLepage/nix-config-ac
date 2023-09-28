@@ -23,7 +23,7 @@
   };
   # TODO need identification on repo
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     dates = "04:00";
     flake = "git+ssh://git@github.com/GaetanLepage/nix-config-ac.git";
     flags = [
