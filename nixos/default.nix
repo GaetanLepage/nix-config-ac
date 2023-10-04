@@ -54,6 +54,7 @@
     btop
     htop
     ncdu
+    tmux
 
     # GUI applications
     evince
