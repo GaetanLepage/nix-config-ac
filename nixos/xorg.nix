@@ -1,23 +1,19 @@
-{
+{pkgs, ...}: {
   services.xserver = {
     enable = true;
 
     # Configure keymap
     layout = "fr";
 
-    # Gnome
     displayManager = {
-      gdm = {
+      lightdm = {
         enable = true;
-        autoSuspend = false;
-        # wayland = true;
+        extraConfig = ''
+          [Seat:*]
+          greeter-setup-script=${pkgs.numlockx}/bin/numlockx on
+        '';
       };
-      # Force wayland session by default
       defaultSession = "cinnamon";
-      autoLogin = {
-        enable = false;
-        user = "anne-catherine";
-      };
     };
 
     desktopManager.cinnamon.enable = true;
