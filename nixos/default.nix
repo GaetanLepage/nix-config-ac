@@ -49,7 +49,6 @@
     vimAlias = true;
   };
 
-  # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     btop
     htop
@@ -61,6 +60,7 @@
     firefox
     gthumb
     libreoffice-fresh
+    mission-center
     thunderbird
     vlc
   ];
