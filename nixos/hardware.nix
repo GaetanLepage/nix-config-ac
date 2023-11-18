@@ -11,12 +11,12 @@
   boot = {
     initrd = {
       availableKernelModules = [
-        "ehci_pci"
-        "ums_realtek"
         "ahci"
+        "sd_mod"
+        "sr_mod"
         "usbhid"
         "usb_storage"
-        "sd_mod"
+        "xhci_pci"
       ];
       kernelModules = [];
     };
