@@ -29,17 +29,26 @@
   # LVS (fwupd)
   services.fwupd.enable = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 4;
+  boot = {
+    # Silent boot
+    consoleLogLevel = 0;
+    kernelParams = [
+      "quiet"
+      "udev.log_level=3"
+    ];
+
+    # Use the systemd-boot EFI boot loader.
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 4;
+      };
+      grub.enable = false;
+
+      timeout = 0;
+
+      efi.canTouchEfiVariables = true;
     };
-    grub.enable = false;
-
-    timeout = 0;
-
-    efi.canTouchEfiVariables = true;
   };
 
   programs.neovim = {
