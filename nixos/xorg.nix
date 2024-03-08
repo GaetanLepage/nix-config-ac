@@ -3,7 +3,7 @@
     enable = true;
 
     # Configure keymap
-    layout = "fr";
+    xkb.layout = "fr";
 
     displayManager = {
       lightdm = {
