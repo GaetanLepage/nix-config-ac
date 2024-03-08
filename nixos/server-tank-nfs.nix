@@ -8,8 +8,9 @@
         "x-systemd.automount"
         "nfsvers=4"
 
-        # disconnects after 10 minutes (i.e. 600 seconds)
-        "x-systemd.idle-timeout=600"
+        # disconnects after 1 minute (i.e. 60 seconds)
+        "x-systemd.idle-timeout=60"
+        "x-systemd.mount-timeout=10"
       ];
     };
   };
