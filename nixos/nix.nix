@@ -18,9 +18,9 @@
   };
 
   system.autoUpgrade = {
-    enable = false;
+    enable = true;
     dates = "04:00";
-    flake = "https://github.com/GaetanLepage/nix-config-ac.git";
+    flake = "github:GaetanLepage/nix-config-ac";
     flags = [
       "--update-input"
       "nixpkgs"
