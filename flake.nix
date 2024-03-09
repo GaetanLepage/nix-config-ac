@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,41 +17,52 @@
   outputs = {
     self,
     nixpkgs,
+    flake-parts,
     agenix,
-  }: let
+  } @ inputs: let
     hostname = "acl-desktop";
-  in {
-    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./nixos
-        agenix.nixosModules.default
-      ];
-    };
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = nixpkgs.lib.systems.flakeExposed;
 
-    apps = let
-      system = "x86_64-linux";
-    in {
-      ${system}.default = {
-        type = "app";
-        program = let
-          pkgs = import nixpkgs {inherit system;};
-        in
-          toString (pkgs.writeShellScript "generate" ''
-            echo "=> Updating flake inputs"
-            nix flake update
+      flake = {
+        nixosConfigurations = {
+          ${hostname} = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./nixos
+              agenix.nixosModules.default
+            ];
+          };
+        };
+      };
 
-            echo "=> Updating system"
-            nixos-rebuild switch \
-                --verbose \
-                --fast \
-                --flake .#${hostname} \
-                --target-host root@${hostname} \
-                --build-host root@${hostname}
-          '');
+      perSystem = {
+        config,
+        pkgs,
+        system,
+        ...
+      }: {
+        formatter = pkgs.alejandra;
+
+        apps.default = {
+          type = "app";
+          program = let
+            pkgs = import nixpkgs {inherit system;};
+          in
+            toString (pkgs.writeShellScript "generate" ''
+              echo "=> Updating flake inputs"
+              nix flake update
+
+              echo "=> Updating system"
+              nixos-rebuild switch \
+                  --verbose \
+                  --fast \
+                  --flake .#${hostname} \
+                  --target-host root@${hostname} \
+                  --build-host root@${hostname}
+            '');
+        };
       };
     };
-
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-  };
 }
