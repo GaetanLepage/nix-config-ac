@@ -8,6 +8,11 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,12 +23,17 @@
     self,
     nixpkgs,
     flake-parts,
+    devshell,
     agenix,
   } @ inputs: let
     hostname = "acl-desktop";
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = nixpkgs.lib.systems.flakeExposed;
+
+      imports = [
+        inputs.devshell.flakeModule
+      ];
 
       flake = {
         nixosConfigurations = {
@@ -45,23 +55,34 @@
       }: {
         formatter = pkgs.alejandra;
 
-        apps.default = {
-          type = "app";
-          program = let
-            pkgs = import nixpkgs {inherit system;};
-          in
-            toString (pkgs.writeShellScript "generate" ''
-              echo "=> Updating flake inputs"
-              nix flake update
+        devshells.default = {
+          packages = [
+            # agenix-rekey.packages.${system}.default
+          ];
 
-              echo "=> Updating system"
-              nixos-rebuild switch \
-                  --verbose \
-                  --fast \
-                  --flake .#${hostname} \
-                  --target-host root@${hostname} \
-                  --build-host root@${hostname}
-            '');
+          commands = [
+            {
+              name = "deploy";
+              command = ''
+                echo "=> Updating system"
+                nixos-rebuild switch \
+                    --verbose \
+                    --fast \
+                    --flake .#${hostname} \
+                    --target-host root@${hostname} \
+                    --build-host root@${hostname}
+              '';
+            }
+            {
+              name = "update";
+              command = ''
+                echo "=> Updating flake inputs"
+                nix flake update
+
+                deploy
+              '';
+            }
+          ];
         };
       };
     };
