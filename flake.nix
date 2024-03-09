@@ -17,14 +17,19 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     flake-parts,
-    devshell,
     agenix,
+    agenix-rekey,
+    devshell,
   } @ inputs: let
     hostname = "acl-desktop";
   in
@@ -36,12 +41,18 @@
       ];
 
       flake = {
+        agenix-rekey = agenix-rekey.configure {
+          userFlake = self;
+          nodes = self.nixosConfigurations;
+        };
+
         nixosConfigurations = {
           ${hostname} = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
               ./nixos
               agenix.nixosModules.default
+              agenix-rekey.nixosModules.default
             ];
           };
         };
@@ -57,7 +68,7 @@
 
         devshells.default = {
           packages = [
-            # agenix-rekey.packages.${system}.default
+            agenix-rekey.packages.${system}.default
           ];
 
           commands = [

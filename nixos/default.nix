@@ -3,6 +3,7 @@
     # Include the results of the hardware scan.
     ./hardware.nix
 
+    ./agenix.nix
     ./backup.nix
     ./networking.nix
     ./nix.nix
@@ -11,7 +12,7 @@
     ./server-tank-nfs.nix
     ./ssh.nix
     ./users.nix
-    ./wireguard.nix
+    ./wireguard
     ./xorg.nix
   ];
 
