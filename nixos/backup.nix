@@ -15,8 +15,10 @@
 
         # rsync backup command
         ${pkgs.rsync}/bin/rsync \
-          -rav \
+          -zravut \
+          --human-readable \
           --delete \
+          --delete-excluded \
           --exclude ".cache/" \
           /home \
           /mnt/server/lepage_family/backup/ac_desktop/
