@@ -69,9 +69,14 @@
         devshells.default = {
           packages = [
             agenix-rekey.packages.${system}.default
+            pkgs.wol
           ];
 
           commands = [
+            {
+              name = "wake";
+              command = "wol d8:9e:f3:12:76:04 -h feroe.glepage.com -p 9";
+            }
             {
               name = "deploy";
               command = ''
