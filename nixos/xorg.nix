@@ -1,22 +1,21 @@
 {pkgs, ...}: {
-  services.xserver = {
-    enable = true;
-
-    # Configure keymap
-    xkb.layout = "fr";
-
-    displayManager = {
-      lightdm = {
+  services = {
+    displayManager.defaultSession = "cinnamon";
+    xserver = {
+      displayManager.lightdm = {
         enable = true;
         extraConfig = ''
           [Seat:*]
           greeter-setup-script=${pkgs.numlockx}/bin/numlockx on
         '';
       };
-      defaultSession = "cinnamon";
-    };
+      enable = true;
 
-    desktopManager.cinnamon.enable = true;
+      # Configure keymap
+      xkb.layout = "fr";
+
+      desktopManager.cinnamon.enable = true;
+    };
   };
 
   # https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
